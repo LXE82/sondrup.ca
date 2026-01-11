@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexi Sondrup | Professional Profile</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex">
+    <meta name="ai-crawlers" content="no-ai-training">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #2563eb;
+            --gray: #f4f4f5;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #09090b; --text: #fafafa; --gray: #27272a; }
+        }
+
+        body { font-family: system-ui, sans-serif; line-height: 1.6; margin: 0; background: var(--bg); color: var(--text); }
+        container { max-width: 800px; margin: 0 auto; padding: 2rem; display: block; }
+        
+        header { border-bottom: 1px solid var(--gray); padding-bottom: 2rem; }
+        h1 { margin: 0; font-size: 2.5rem; }
+        .tagline { color: var(--accent); font-weight: 600; }
+
+        section { margin-top: 3rem; }
+        .work-item { margin-bottom: 1.5rem; padding: 1rem; background: var(--gray); border-radius: 8px; }
+        
+        /* Contact Form Styles */
+        form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+        input, textarea { padding: 0.8rem; border: 1px solid var(--gray); border-radius: 4px; background: var(--bg); color: var(--text); }
+        button { background: var(--accent); color: white; border: none; padding: 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        
+        .protected-link { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<container>
+    <header>
+        <h1>Alexi Sondrup</h1>
+        <p class="tagline">Work History & Professional Profile</p>
+        <div id="contact-gate">
+            </div>
+    </header>
+
+    <section id="work">
+        <h2>Work History</h2>
+        <div class="work-item">
+            <strong>Senior Role Name</strong> | Company Name <br>
+            <small>2022 — Present</small>
+            <p>Key achievement or responsibility goes here. Focus on metrics and impact.</p>
+        </div>
+        </section>
+
+    <section id="resume">
+        <h2>Resume</h2>
+        <p>View or download my full CV: 
+            <a href="resume.pdf" class="protected-link" target="_blank">Download PDF</a>
+        </p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Recruiters: Please use the form below. Bots are automatically filtered.</p>
+        <form id="contactForm">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Professional Email" required>
+            <textarea name="message" rows="4" placeholder="How can I help you?" required></textarea>
+            <input type="text" name="_honey" style="display:none">
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--gray); font-size: 0.9rem;">
+        <div id="social-links">
+            </div>
+    </footer>
+</container>
+
+<script>
+    // 1. Email & Phone Obfuscation (Decodes only on page load)
+    const user = "alexi";
+    const domain = "sondrup.ca";
+    const contactGate = document.getElementById('contact-gate');
+    
+    // Injects a clickable mailto link that bots can't easily find in raw HTML
+    contactGate.innerHTML = `
+        <p>📧 <span class="protected-link" onclick="window.location.href='mailto:' + '${user}' + '@' + '${domain}'">Connect via Email</span></p>
+    `;
+
+    // 2. Social Media Obfuscation
+    const socials = {
+        linkedin: "https://linkedin.com/in/alexi-sondrup",
+        github: "https://github.com/alexisondrup"
+    };
+    
+    const socialContainer = document.getElementById('social-links');
+    socialContainer.innerHTML = `
+        <a href="${socials.linkedin}" class="protected-link">LinkedIn</a> | 
+        <a href="${socials.github}" class="protected-link">GitHub</a>
+    `;
+
+    // 3. Simple Form Handling with Bot Check
+    document.getElementById('contactForm').onsubmit = function(e) {
+        if(e.target._honey.value) {
+            alert("Bot detected!");
+            return false;
+        }
+        // Integration note: Use a service like Formspree or Netlify Forms here
+        alert("Thank you! I will get back to you shortly.");
+    };
+</script>
+
+</body>
+</html>
