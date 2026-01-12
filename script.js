@@ -36,7 +36,6 @@ function initObfuscation() {
 
     // Resume logic removed by user request
 
-
     // Carousel Navigation
     const carousel = document.querySelector('.reviews-carousel');
     const prevBtn = document.querySelector('.prev-btn');
@@ -49,51 +48,6 @@ function initObfuscation() {
 
         nextBtn.addEventListener('click', () => {
             carousel.scrollBy({ left: 320, behavior: 'smooth' });
-        });
-    }
-
-    // Review Modal Logic
-    const modal = document.getElementById('review-modal');
-    if (modal) {
-        const closeBtn = modal.querySelector('.modal-close');
-        const modalBody = modal.querySelector('#modal-body');
-
-        // Open Modal
-        document.querySelectorAll('.review-card').forEach(card => {
-            card.style.cursor = 'pointer'; // Make it look clickable
-            card.addEventListener('click', () => {
-                const text = card.querySelector('.review-text').innerText; // Get full text (even if clamped) or specific data attribute
-                // Ideally, use the full text. If CSS clamps it, innerText might be truncated? 
-                // No, innerText usually gets mostly everything unless visibility:hidden. 
-                // Better approach: Clone the content.
-
-                const fullText = card.querySelector('.review-text').innerHTML;
-                const stars = card.querySelector('.star-rating').outerHTML;
-                const meta = card.querySelector('.meta').outerHTML; // Keep date/author
-
-                modalBody.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 1.5rem;">${stars}</div>
-                    <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">${fullText}</div>
-                    <div style="text-align: right; color: var(--text-secondary);">${meta}</div>
-                `;
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
-            });
-        });
-
-        // Close Modal
-        const closeModal = () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
     }
 }
