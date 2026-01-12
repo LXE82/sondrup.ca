@@ -153,6 +153,24 @@ h3 {
     display: block;
 }
 
+.linkedin-badge {
+    color: #0A66C2;
+    /* LinkedIn Brand Color */
+    transition: transform 0.2s ease, opacity 0.2s;
+    opacity: 0.8;
+}
+
+.linkedin-badge:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.linkedin-badge svg {
+    width: 2rem;
+    height: 2rem;
+    fill: currentColor;
+}
+
 .small-text {
     font-size: 0.875rem;
     color: var(--text-secondary);
