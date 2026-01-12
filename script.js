@@ -78,22 +78,45 @@ function initContactForm() {
             return false;
         }
 
-        // Success State (Mock)
-        // In production, integrate with Formspree, Netlify Forms, etc.
+        // Formspree AJAX Submission
         const btn = form.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
 
         btn.textContent = "Sending...";
         btn.disabled = true;
 
-        setTimeout(() => {
-            alert("Thank you, " + name + ". I will be in touch shortly.");
-            form.reset();
-            btn.textContent = "Message Sent";
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 3000);
-        }, 1000); // Simulate network delay
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                alert("Thank you, " + name + ". Your message has been sent successfully.");
+                form.reset();
+                btn.textContent = "Message Sent";
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert("Oops! There was a problem submitting your form");
+                    }
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                });
+            }
+        }).catch(error => {
+            alert("Oops! There was a problem submitting your form");
+            btn.textContent = originalText;
+            btn.disabled = false;
+        });
     };
 }
